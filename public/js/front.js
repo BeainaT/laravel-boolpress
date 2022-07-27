@@ -10747,7 +10747,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    axios.get("http://127.0.0.1:8000/api/posts").then(function (res) {
+    axios.get("/api/posts").then(function (res) {
       _this.posts = res.data;
     })["catch"](function (e) {
       console.log(e);

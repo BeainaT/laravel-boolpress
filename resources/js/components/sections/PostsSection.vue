@@ -21,7 +21,7 @@ export default {
         };
     },
     created() {
-        axios.get("http://127.0.0.1:8000/api/posts")
+        axios.get("/api/posts")
             .then(res => {
             this.posts = res.data;
         })
