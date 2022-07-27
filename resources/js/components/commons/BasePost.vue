@@ -4,7 +4,8 @@
     <div class="post__content">
        {{content}}
     </div>
-    <a href="">Leggi post</a>
+    <!-- <a href="">Leggi post</a> -->
+    <router-link :to="{ name: 'check-post', params: {slug: slug} }">Leggi post</router-link>
   </div>
 </template>
 
@@ -13,7 +14,8 @@ export default {
     name: 'BasePost',
     props: {
         title: String,
-        content: String
+        content: String,
+        slug: String
     }
 }
 </script>

@@ -5,6 +5,7 @@ Vue.use(VueRouter);
 
 import Home from "./pages/Home";
 import About from "./pages/About";
+import CheckPost from "./pages/CheckPost";
 import Page404 from "./pages/Page404";
 
 const router = new VueRouter({
@@ -19,6 +20,11 @@ const router = new VueRouter({
             path:"/about",
             name: "about",
             component: About
+        },
+        {
+            path: "/posts/:slug",
+            name: "check-post",
+            component: CheckPost
         },
         {
             path: "/*",

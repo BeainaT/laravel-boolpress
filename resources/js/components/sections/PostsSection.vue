@@ -3,7 +3,7 @@
     <div class="container">
       <ul>
         <li v-for="post in posts" :key="post.id">
-          <BasePost :title="post.title" :content="post.content"/>
+          <BasePost :title="post.title" :content="post.content" :slug="post.slug"/>
         </li>
       </ul>
     </div>
