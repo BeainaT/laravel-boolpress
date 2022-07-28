@@ -2,7 +2,11 @@
   <div class="container">
     <h1>Categorie</h1>
         <ul>
-            <li v-for="category in categories" :key="category.id">{{category.name}}</li>
+            <li v-for="category in categories" :key="category.id">
+                <router-link :to="{ name: 'check-category', params: {slug: category.slug }}">
+                    {{category.name}}
+                </router-link>
+            </li>
         </ul>
   </div>
 </template>
@@ -13,7 +17,7 @@ export default {
     name: 'CategoriesSection',
     data() {
         return {
-            categories: []
+            categories: [],
         }
     },
     created() {
