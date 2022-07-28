@@ -11,6 +11,7 @@
               <li>
                 <router-link :to="{name: 'home'}">Home</router-link>
                 <router-link :to="{name: 'about'}">About us</router-link>
+                <router-link :to="{name: 'categories-page'}">Categories</router-link>
                 <a href="admin/home">Area Riservata</a>
               </li>
             </ul>
