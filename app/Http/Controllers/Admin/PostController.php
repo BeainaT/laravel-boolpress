@@ -10,7 +10,16 @@ use App\Post;
 use App\Category;
 use App\Tag;
 class PostController extends Controller
-{
+{   
+    private $validation = [
+        'author_name' => 'required|string|max:50',
+        'author_lastname' => 'nullable|string|max:50',
+        'title' => 'required|string|max:100',
+        'content' => 'required|string|max:65535',
+        'is_published' => 'sometimes',
+        'category_id' => 'nullable|exists:categories,id', //if category_id is selected it must be exists in table called categories
+        'tags' => 'array|exists:tags,id'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -46,9 +55,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'category_id' => 'nullable|exists:categories,id' //if category_id is selected it must be exists in table called categories
-        ]);
+        $request->validate($this->validation);
 
         $data = $request->all();
 
@@ -112,6 +119,8 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $request->validate($this->validation);
+
         $data = $request->all();
         $post->fill($data);
         //slug method to fix
@@ -129,6 +138,10 @@ class PostController extends Controller
         $post->is_published = isset($data['is_published']); 
         
         $post->save();
+
+        if(isset($data['tags'])) {
+            $post->tags()->sync($data['tags']);
+        }
 
         return redirect()->route('admin.posts.show', compact('post'));
     }
