@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h1>Categorie</h1>
+        <template :v-if="categories.lenght > 0">
         <ul>
             <li v-for="category in categories" :key="category.id">
                 <router-link :to="{ name: 'check-category', params: {slug: category.slug }}">
@@ -8,6 +9,7 @@
                 </router-link>
             </li>
         </ul>
+        </template>
   </div>
 </template>
 

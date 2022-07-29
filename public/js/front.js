@@ -10845,6 +10845,8 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get("/api/categories/".concat(this.$route.params.slug)).then(function (res) {
       _this.category = res.data;
+    })["catch"](function (e) {
+      console.log(e);
     });
   }
 });
@@ -11109,7 +11111,7 @@ var render = function render() {
 
   return _c("div", {
     staticClass: "container"
-  }, [_c("h1", [_vm._v("Categorie")]), _vm._v(" "), _c("ul", _vm._l(_vm.categories, function (category) {
+  }, [_c("h1", [_vm._v("Categorie")]), _vm._v(" "), [_c("ul", _vm._l(_vm.categories, function (category) {
     return _c("li", {
       key: category.id
     }, [_c("router-link", {
@@ -11122,7 +11124,7 @@ var render = function render() {
         }
       }
     }, [_vm._v("\n                  " + _vm._s(category.name) + "\n              ")])], 1);
-  }), 0)]);
+  }), 0)]], 2);
 };
 
 var staticRenderFns = [];
@@ -11242,7 +11244,16 @@ var render = function render() {
   }, [_vm.category != null ? [_c("h1", [_vm._v(_vm._s(_vm.category.name))]), _vm._v(" "), _c("h2", [_vm._v("posts associati:")]), _vm._v(" "), _c("ul", _vm._l(_vm.category.posts, function (post) {
     return _c("li", {
       key: post.id
-    }, [_c("h3", [_vm._v(_vm._s(post.title))]), _vm._v(" "), _c("p", [_vm._v(_vm._s(post.content))]), _vm._v(" "), _c("h4", [_vm._v(_vm._s(post.author_name) + " " + _vm._s(post.author_lastname))])]);
+    }, [_c("h3", [_c("router-link", {
+      attrs: {
+        to: {
+          name: "check-post",
+          params: {
+            slug: post.slug
+          }
+        }
+      }
+    }, [_vm._v(" " + _vm._s(post.title))])], 1), _vm._v(" "), _c("p", [_vm._v(_vm._s(post.content))]), _vm._v(" "), _c("h4", [_vm._v(_vm._s(post.author_name) + " " + _vm._s(post.author_lastname))])]);
   }), 0)] : _vm._e()], 2);
 };
 
@@ -11269,7 +11280,13 @@ var render = function render() {
 
   return _c("div", {
     staticClass: "container"
-  }, [_vm.post != null ? [_c("h1", [_vm._v(_vm._s(_vm.post.title))]), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.post.content))]), _vm._v(" "), _c("h4", [_vm._v(_vm._s(_vm.post.user.name) + " " + _vm._s(_vm.post.author_lastname))])] : _vm._e()], 2);
+  }, [_vm.post != null ? [_c("h1", [_vm._v(_vm._s(_vm.post.title))]), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.post.content))]), _vm._v(" "), _vm.post.image_path != null ? [_c("img", {
+    attrs: {
+      src: _vm.post.image_path,
+      alt: "post related img",
+      width: "200"
+    }
+  })] : _vm._e(), _vm._v(" "), _c("h4", [_vm._v(_vm._s(_vm.post.user.name) + " " + _vm._s(_vm.post.author_lastname))])] : _vm._e()], 2);
 };
 
 var staticRenderFns = [];
