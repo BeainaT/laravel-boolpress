@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="container">
-    <form action="{{route('admin.posts.store')}}" method="POST">
+    <form action="{{route('admin.posts.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-row">
           <div class="form-group col-md-6">
@@ -45,8 +45,15 @@
             </label>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Crea</button>
+        <div class="row">
+          <div class="col-md-6">
+              <label for="image">Immagine</label>
+              <input type="file" name="image" id="image" class="form-control" value="{{old('image')}}">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Crea</button>
       </form>
+
       @if ($errors->any())
         <div class="alert alert-danger">
             <ul>

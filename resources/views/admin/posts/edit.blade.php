@@ -3,7 +3,7 @@
 @section('content')
   <div class="container">
     <h1>modifica post</h1>
-    <form action="{{route('admin.posts.update', $post->id)}}" method="POST">
+    <form action="{{route('admin.posts.update', $post->id)}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-row">
@@ -24,7 +24,6 @@
           <label for="post">Post</label>
           <textarea rows="10" class="form-control" id="post" name="content">{{old('content', $post->content)}}</textarea>
         </div>
-        {{-- @dd($post->content) --}}
         <div class="form-group">
           <label for="category">Categoria</label>
           <select class="form-control" id="category" name="category_id">
@@ -48,7 +47,13 @@
             </label>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Modifica</button>
+        <div class="mb-3">
+        <div class="col-md-6 px-0">
+          <label for="image">Immagine</label>
+            <img class="my-2" width="100" src="{{asset('storage/'.$post->image)}}" alt="">
+            <input type="file" name="image" id="image" class="form-control" value="{{old('image', $post->image)}}">
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Modifica</button>
       </form>
       @if ($errors->any())
         <div class="alert alert-danger">

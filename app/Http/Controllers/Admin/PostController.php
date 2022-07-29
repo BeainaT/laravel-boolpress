@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Post;
 use App\Category;
 use App\Tag;
@@ -18,7 +19,8 @@ class PostController extends Controller
         'content' => 'required|string|max:65535',
         'is_published' => 'sometimes',
         'category_id' => 'nullable|exists:categories,id', //if category_id is selected it must be exists in table called categories
-        'tags' => 'array|exists:tags,id'
+        'tags' => 'array|exists:tags,id',
+        'images' => 'nullable|image|max:1024'
     ];
     /**
      * Display a listing of the resource.
@@ -58,7 +60,6 @@ class PostController extends Controller
         $request->validate($this->validation);
 
         $data = $request->all();
-
         $newPost = new Post();
         $newPost->fill($data);        
         
@@ -74,11 +75,16 @@ class PostController extends Controller
         $newPost->is_published = isset($data['is_published']);
 
         $newPost->user_id = Auth::id();
+
+        if(isset($data['image'])) {
+            $newPost->image = Storage::put('uploads', $data['image']);
+        }
         
         $newPost->save();
         if(isset($data['tags'])) {
             $newPost->tags()->sync($data['tags']);
         }
+        
         return redirect()->route('admin.posts.show', $newPost->id);
     }
 
@@ -135,7 +141,12 @@ class PostController extends Controller
             $post->slug = $slug;
         }
         //---end slug method to fix
-        $post->is_published = isset($data['is_published']); 
+        $post->is_published = isset($data['is_published']);
+
+        if(($post->image != null)) {
+            Storage::delete($post->image);
+        }
+        $post->image = Storage::put('uploads', $data['image']);
         
         $post->save();
 
