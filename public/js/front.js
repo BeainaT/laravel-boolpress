@@ -10866,7 +10866,13 @@ __webpack_require__.r(__webpack_exports__);
   name: 'CheckPost',
   data: function data() {
     return {
-      post: null
+      post: null,
+      formComments: {
+        author: '',
+        content: ''
+      },
+      message: {},
+      isSent: false
     };
   },
   created: function created() {
@@ -10877,6 +10883,19 @@ __webpack_require__.r(__webpack_exports__);
     })["catch"](function (e) {
       console.log(e);
     });
+  },
+  methods: {
+    addComment: function addComment() {
+      var _this2 = this;
+
+      axios.post("/api/comments/".concat(this.post.id), this.formComments).then(function (res) {
+        _this2.message = res.data;
+        _this2.formComments.author = "";
+        _this2.formComments.content = "";
+        _this2.isSent = true;
+        console.log(_this2.message);
+      }); // console.log(this.formComments)
+    }
   }
 });
 
@@ -11286,7 +11305,78 @@ var render = function render() {
       alt: "post related img",
       width: "200"
     }
-  })] : _vm._e(), _vm._v(" "), _c("h4", [_vm._v(_vm._s(_vm.post.user.name) + " " + _vm._s(_vm.post.author_lastname))])] : _vm._e()], 2);
+  })] : _vm._e(), _vm._v(" "), _c("h4", [_vm._v(_vm._s(_vm.post.user.name) + " " + _vm._s(_vm.post.author_lastname))])] : _vm._e(), _vm._v(" "), _c("form", {
+    staticClass: "col-6 px-0",
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.addComment();
+      }
+    }
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "author"
+    }
+  }, [_vm._v("Autore")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formComments.author,
+      expression: "formComments.author"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      name: "author",
+      type: "text",
+      id: "author"
+    },
+    domProps: {
+      value: _vm.formComments.author
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.formComments, "author", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "comments"
+    }
+  }, [_vm._v("Commento")]), _vm._v(" "), _c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formComments.content,
+      expression: "formComments.content"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      name: "content",
+      id: "comments",
+      rows: "4"
+    },
+    domProps: {
+      value: _vm.formComments.content
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.formComments, "content", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-primary mb-3",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("Invia commento")])]), _vm._v(" "), _vm.isSent ? [_c("h3", [_vm._v("Lista commenti")]), _vm._v(" "), _c("ul", [_c("li", [_c("h5", [_vm._v(_vm._s(_vm.message.author))]), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.message.content))])])])] : _vm._e()], 2);
 };
 
 var staticRenderFns = [];
