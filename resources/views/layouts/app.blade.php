@@ -43,6 +43,9 @@
                         <li>
                             <a class="nav-link" href="{{route('admin.tags.index')}}">Tag</a>
                         </li>
+                        <li>
+                            <a class="nav-link" href="{{route('admin.comments.index')}}">Commenti</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

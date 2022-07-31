@@ -10,9 +10,11 @@
                     <div class="mb-3">
                         {{$post->content}}
                     </div>
-                    <div class="mb-3">
-                        <img width="200" src="{{asset('storage/'.$post->image)}}">
-                    </div>
+                    @if($post->image)
+                        <div class="mb-3">
+                            <img width="200" src="{{asset('storage/'.$post->image)}}">
+                        </div>
+                    @endif
                     <div>
                         @if ($post->category)
                             <h5>categorie associate:</h5>
